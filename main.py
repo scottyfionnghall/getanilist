@@ -12,6 +12,7 @@ query ($userName: String) { # Define which variables will be used in the query (
         mediaId
         media {
           title {
+            english
             romaji
           }
           status
@@ -35,7 +36,11 @@ with open('output.txt','w',encoding='utf-8') as f:
     for i in data["data"]["MediaListCollection"]["lists"]:
         for j in i["entries"]:
             if j["media"]["status"] == "FINISHED":
-                for k,v in j["media"]["title"].items():
-                    f.write(v+'\n')
+              if j["media"]["title"]["english"] != None:
+                  f.write(j["media"]["title"]["english"]+'\n')
+              else:
+                  f.write(j["media"]["title"]["romaji"]+'\n')
+                  
+                        
 
 print("Finished!")
